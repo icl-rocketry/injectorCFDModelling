@@ -7,14 +7,16 @@ to run the sim, you will have to delete all numbered folders (e.g. '0.01' --- EX
 
 decomposeParDict - currently configured to run with 4 cores, uses scotch decomposition (OpenFOAM automatic algorithm)
 
-to run parallel: cd to working directory, run decomposePar, then run:
+to run parallel: cd to working directory, run:
+	decomposePar
+then run:
 	mpirun -np 4 interPhaseChangeFoam -parallel
 once complete, run:
 	reconstructPar 
 to reconstruct parallelised fields. 
-to see new results type:
+to see new results type:	
 	touch <FILENAME>.foam
 
 **optional**
-interFoam > log.interFoam & (this reduces the difference between ExecutionTime and ClockTime)
-tail -f log.interFoam (this allows you to follow it as usual)
+mpirun -np 4 interPhaseChangeFoam -parallel > log.interPhaseChangeFoam &  (this reduces the difference between ExecutionTime and ClockTime)
+tail -f log.interPhaseChangeFoam (this allows you to follow it as usual)
