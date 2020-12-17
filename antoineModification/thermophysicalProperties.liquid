@@ -1,0 +1,86 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1806                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      thermophysicalProperties.liquid;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+thermoType
+{
+    type            heRhoThermo;
+    mixture         multiComponentMixture;
+    transport       const;
+    thermo          hConst;
+    equationOfState perfectFluid;
+    specie          specie;
+    energy          sensibleInternalEnergy;
+}
+
+dpdt yes;
+
+species
+(
+    air
+    methanol
+);
+
+inertSpecie methanol;
+
+"(mixture|methanol)"
+{
+    specie
+    {
+        molWeight   32.01;
+    }
+    equationOfState
+    {
+        R           3000;
+        rho0        764; //Methanol at 55 C from Engineering ToolBox
+    }
+    thermodynamics
+    {
+        Hf          -7.4467e+06;
+        Cp          2686; //Methanol at 55 C from Engineering ToolBox
+    }
+    transport
+    {
+        mu          3.99e-4; //Methanol at 55 C from Engineering ToolBox
+        Pr          5.3; //k = 0.202 W/m/K thermal conductivity. Pr = mu Cp / k
+    }
+}
+
+air
+{
+    specie
+    {
+        molWeight   28.9;
+    }
+    equationOfState
+    {
+        R           3000;
+        rho0        764; //Methanol at 55 C from Engineering ToolBox
+    }
+    thermodynamics
+    {
+        Hf          0;
+        Cp          2686; //Methanol at 55 C from Engineering ToolBox
+    }
+    transport
+    {
+        mu          3.99e-4; //Methanol at 55 C from Engineering ToolBox
+        Pr          5.3; //k = 0.202 W/m/K thermal conductivity. Pr = mu Cp / k
+    }
+}
+
+
+// ************************************************************************* //
