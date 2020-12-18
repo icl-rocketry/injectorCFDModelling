@@ -20,7 +20,7 @@ phaseChangeTwoPhaseMixture SchnerrSauer;
 
 pSat            2300;// 40.012e5;   // nitrous sat pressure @ 10 C
 
-sigma           0.024; // nitrous viscosity @ 10 C original: 0.07;//
+sigma           3.6714e-03; // nitrous surface tension @ 10 C original: 0.07;//
 
 water //nitrous properties at 10 C 
 {
