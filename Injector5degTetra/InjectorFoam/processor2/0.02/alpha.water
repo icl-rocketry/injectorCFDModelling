@@ -62,7 +62,7 @@ internalField   nonuniform List<scalar>
 1
 1
 1
-0.999977
+0.999949
 1
 1
 1
@@ -76,7 +76,7 @@ internalField   nonuniform List<scalar>
 1
 1
 1
-0.940077
+0.933475
 1
 1
 1
@@ -202,7 +202,7 @@ internalField   nonuniform List<scalar>
 1
 1
 1
-0.995966
+0.992238
 1
 1
 1
@@ -3648,7 +3648,7 @@ boundaryField
 1
 1
 1
-0.940077
+0.933475
 )
 ;
     }

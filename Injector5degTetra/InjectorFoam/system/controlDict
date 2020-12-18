@@ -22,9 +22,9 @@ startTime       0;
 
 stopAt          endTime; //used to be endTime, writeNow for emergency stop
 
-endTime         0.03;
+endTime         0.30;//was 3ms
 
-deltaT          1e-3; // was 1e-8
+deltaT          1e-5;//1e-3 runs easily
 
 writeControl    adjustable;
 
