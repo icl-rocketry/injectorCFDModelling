@@ -30,9 +30,11 @@ def surface_tension(T):
     sigma = b1*pow((1-Tr),b2)*(1+b3*(1-Tr))
     return sigma
 
-def update_disp(P,rhov,rhol,Vv,Vl,sigma):
+def update_disp(P,rhov,rhol,Vv,Vl,sigma,dHl,dHv):
     window["PRESSURE"].update(value="{:.4e}".format(P))
     window["TEMPERATURE"].update(value="{:.2f}".format(T))
+    window["LENTHALPY"].update(value="{:.4e}".format(dHl))
+    window["VENTHALPY"].update(value="{:.4e}".format(dHv))
     window["SIGMA"].update(value="{:.4e}".format(sigma))
     window["vapDensity"].update(value="{:.4e}".format(rhov))
     window["liqDensity"].update(value="{:.4e}".format(rhol))
@@ -44,6 +46,8 @@ def calc_props(T,fluid):
     Pv = PropsSI('P','T',T,'Q',1,fluid)
     rhov = PropsSI('D','T',T,'Q',1,fluid)
     rhol = PropsSI('D','T',T,'Q',0,fluid)
+    dHv = PropsSI("H","T",T,"Q",1,fluid)
+    dHl = PropsSI("H","T",T,"Q",0,fluid)
     if fluid == 'NitrousOxide':
         Vv = visc_sat_vap(T)
         Vl = visc_sat_liq(T)
@@ -52,7 +56,7 @@ def calc_props(T,fluid):
         Vv = PropsSI('V','T',T,'Q',1,fluid)
         Vl = PropsSI('V','T',T,'Q',0,fluid)
         sigma = PropsSI("surface_tension","T",T,"Q",0,fluid)
-    update_disp(Pv,rhov,rhol,Vv,Vl,sigma)
+    update_disp(Pv,rhov,rhol,Vv,Vl,sigma,dHv,dHl)
     return
 
 # for using coolprop:
@@ -70,9 +74,9 @@ def calc_props(T,fluid):
 #sg.theme('Dark')
 
 headings = ["State","Density (kg/m^3)","Kinematic Viscosity (m^2/s)"]
-validFluids = ["NitrousOxide","Ammonia","CarbonDioxide","Ethane","Ethanol","Hydrogen","Methane","R134a","Water"]
+validFluids = ["NitrousOxide","CarbonDioxide","Water"]
 layout = [ 
-            [sg.Text("Choose fluid")],
+            [sg.Text("Choose fluid, or type valid fluid in")],
             [sg.InputCombo(validFluids,key="FLUID")],
             [sg.Text("Enter temperatures in °C")],
             [sg.Input(size=(12,1),key="TEMP_INPUT")],
@@ -80,16 +84,16 @@ layout = [
             [sg.Text("Temp: ",size=(12,1)),sg.Input("",key="TEMPERATURE", size=(10,1)),sg.Text("K")],
             [sg.Text("Pressure: ",size=(12,1)),sg.Input("",key="PRESSURE",size=(10,1)),sg.Text("Pa")],
             [sg.Text("Surface Tension: ",size=(12,1)),sg.Input("",key="SIGMA",size=(10,1)),sg.Text("N/m²")],
-            [sg.Text("State",size=(7,1)),sg.Text("Density (kg/m³)",size=(12,1)),sg.Text("Kinematic Viscosity (m²/s)",size=(20,1))],
-            [sg.Text("vapour",size=(7,1)),sg.Input("",key="vapDensity",size=(10,1)),sg.Text("",size=(1,1)),sg.Input("",key="vapVisc",size=(10,1))],
-            [sg.Text("liquid",size=(7,1)),sg.Input("",key="liqDensity",size=(10,1)),sg.Text("",size=(1,1)),sg.Input("",key="liqVisc",size=(10,1))]
+            [sg.Text("State",size=(7,1)),sg.Text("Density (kg/m³)",size=(12,1)),sg.Text("Kinematic Viscosity (m²/s)",size=(20,1)),sg.Text("Enthalpy (J/kg)")],
+            [sg.Text("vapour",size=(7,1)),sg.Input("",key="vapDensity",size=(10,1)),sg.Text("",size=(2,1)),sg.Input("",key="vapVisc",size=(10,1))
+            ,sg.Text("",size=(9,1)),sg.Input("",key="VENTHALPY",size=(10,1))],
+            [sg.Text("liquid",size=(7,1)),sg.Input("",key="liqDensity",size=(10,1)),sg.Text("",size=(2,1)),sg.Input("",key="liqVisc",size=(10,1))
+            ,sg.Text("",size=(9,1)),sg.Input("",key="LENTHALPY",size=(10,1))]
          ]
 
 window = sg.Window('saturation properties calculator', layout, grab_anywhere=True)
 
 while 1:
-    #fluid = 'NitrousOxide'
-    #T = 273.15 + float(input("temp: "))   
     event, inputs = window.read()
     if event == sg.WIN_CLOSED:     # If user closed window with X or if user clicked "Exit" button then exit
         break
@@ -116,6 +120,7 @@ while 1:
         print("invalid value of T")
 
 window.close()
+# pyinstaller -wF genSatPropsGUI.py
 # references:
 # https://webbook.nist.gov/cgi/fluid.cgi?TLow=+216.592&THigh=304.1282&TInc=1&Applet=on&Digits=5&ID=C124389&Action=Load&Type=SatP&TUnit=K&PUnit=bar&DUnit=kg%2Fm3&HUnit=kJ%2Fmol&WUnit=m%2Fs&VisUnit=uPa*s&STUnit=N%2Fm&RefState=DEF
 # http://edge.rit.edu/edge/P07106/public/Nox.pdf
