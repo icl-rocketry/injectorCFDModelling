@@ -30,5 +30,5 @@ https://drive.google.com/drive/u/0/folders/1pLNUjTEDKc12vxf4TFTfJRrxMRk-E3q4
   
   
 In my uninformed opinion, I believe the main source of error in CIRA's approach is in their incompressible assumption leading me to believe the eulerian solver approach, even without heat transfer, would have far better accuracy. This is demonstraited in the more accurate results of UoT's paper. <br>
-However, CIRA do appear to capture the choking of the flow. I'm unsure as to whether this is choking occuring from cavitation, or if it's an artificial limit applied. <br>
+However, CIRA do appear to capture the choking of the flow. I'm unsure as to whether this is choking occuring from cavitation, or if it's an artificial limit applied. It being an imposed limit seems very unlikely. <br>
 </p>
