@@ -26,9 +26,10 @@ https://drive.google.com/drive/u/0/folders/1pLNUjTEDKc12vxf4TFTfJRrxMRk-E3q4
 <h3>UoSalento (cavitatingHsolver)</h3>  
 <p>-implementation of antoine equations for Psat. This is likely already present in relevant OF solvers.  <br>
 -this requires modelling heat transfer, which could increase computational cost drastically.  <br>
--homogenous mixture approach as used also appears to be applicable to injector modelling, as i do not believe there is slip.<br>
-  
-  
+-homogenous mixture approach as used also appears to be applicable to prediction of mass flow, though tending to underpredict where non homogenous models overpredict.<br>
+-inbuilt model considers flow of hydrogen, nitrogen, water. I believe none are particularly applicable just from considering molecular geometry & IMF <br>
+-this solver confuses me, as it claims to be isothermal but appears to contains code to recompute the temperature field should the temp fall outside of a predetermined range. <br>
+ 
 In my uninformed opinion, I believe the main source of error in CIRA's approach is in their incompressible assumption leading me to believe the eulerian solver approach, even without heat transfer, would have far better accuracy. This is demonstraited in the more accurate results of UoT's paper. <br>
 However, CIRA do appear to capture the choking of the flow. I'm unsure as to whether this is choking occuring from cavitation, or if it's an artificial limit applied. It being an imposed limit seems very unlikely. <br>
 </p>
