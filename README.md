@@ -16,11 +16,13 @@ https://drive.google.com/drive/u/0/folders/1pLNUjTEDKc12vxf4TFTfJRrxMRk-E3q4
 
 <h3>new mesh (hex/poly)</h3>
 
--geometry from patches in fusion "ICLR/COTS 10K 2020/Propulsion/cfd"
+<p>-geometry from patches in fusion "ICLR/COTS 10K 2020/Propulsion/cfd" <br>
 
--following József Nagy's multiphase project, where he creates a mesh from a geometry defined by stl files
+-following József Nagy's multiphase project, where he creates a mesh from a geometry defined by stl files <br>
 
+-I'm unsure whether it's best to follow this or create the mesh just from a good blockmeshdict, as snappyhexmesh may default to trying to refine around wall boundary conditions<br>
 
+</p>
 
 
 <h2>solvers</h2>  
