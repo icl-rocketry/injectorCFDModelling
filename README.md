@@ -10,7 +10,7 @@ https://drive.google.com/drive/u/0/folders/1pLNUjTEDKc12vxf4TFTfJRrxMRk-E3q4
 <h2>mesh</h2>
 <h3>current mesh (tet4)</h3>
 <p>-refinement near walls, where should be finer towards center as that is where we are concerned with capturing effects.  <br>
--no slip condition should need finer mesh granularity, however i believe nitrous may be near stagnation. Very unsure of this, I'm theorising from UoT's mesh.  <br>
+-no slip condition should need finer mesh granularity, but seems to be unimportant as has little affect on the validity of the data we're trying to gather. Very unsure of this, I'm theorising from UoT's mesh.  <br>
 -hexahedral would be preferable. Refinement of current tet mesh using snappyHexMesh may produce this result, however this doesnt address the first point.  <br>
     -hexahedral meshes create better results with smaller number of cells I <em>think</em>. People who are versed in OF said so.<br></p>
 
