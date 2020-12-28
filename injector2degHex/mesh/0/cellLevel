@@ -22,6 +22,10 @@ internalField   uniform 0;
 
 boundaryField
 {
+    allBoundary
+    {
+        type            zeroGradient;
+    }
     outlet
     {
         type            zeroGradient;

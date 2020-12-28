@@ -15,28 +15,34 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-3
+4
 (
+    allBoundary
+    {
+        type            patch;
+        nFaces          240;
+        startFace       7779;
+    }
     outlet
     {
         type            wall;
         inGroups        1(wall);
-        nFaces          83;
-        startFace       3248;
+        nFaces          141;
+        startFace       8019;
     }
     sides
     {
         type            wall;
         inGroups        1(wall);
-        nFaces          599;
-        startFace       3331;
+        nFaces          660;
+        startFace       8160;
     }
     walls
     {
         type            wall;
         inGroups        1(wall);
-        nFaces          202;
-        startFace       3930;
+        nFaces          321;
+        startFace       8820;
     }
 )
 
