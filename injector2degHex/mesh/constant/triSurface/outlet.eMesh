@@ -9,35 +9,19 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       polyBoundaryMesh;
-    location    "constant/polyMesh";
-    object      boundary;
+    class       featureEdgeMesh;
+    location    "constant/triSurface";
+    object      outlet.eMesh;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-3
-(
-    outlet
-    {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          83;
-        startFace       3248;
-    }
-    sides
-    {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          599;
-        startFace       3331;
-    }
-    walls
-    {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          202;
-        startFace       3930;
-    }
-)
+
+// points:
+5((29.9817 0 1.04699) (29.9919 0 0.698069) (0 0 0) (29.998 0 0.349058) (30 0 0))
+
+// edges:
+7((1 2) (3 2) (0 1) (2 0) (1 3) (3 4) (4 2))
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
 
 // ************************************************************************* //

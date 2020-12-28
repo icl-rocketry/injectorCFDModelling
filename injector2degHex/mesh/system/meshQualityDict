@@ -10,42 +10,15 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    location    "system";
-    object      controlDict;
+    object      meshQualityDict;
 }
+
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-//Just dummy entries, don't worry.
+//Here we use standard mesh quality settings
 
-application     icoFoam;
-
-startFrom       startTime;
-
-startTime       0;
-
-stopAt          endTime;
-
-endTime         50;
-
-deltaT          1;
-
-writeControl    timeStep;
-
-writeInterval   20;
-
-purgeWrite      0;
-
-writeFormat     ascii;
-
-writePrecision  6;
-
-writeCompression off;
-
-timeFormat      general;
-
-timePrecision   6;
-
-runTimeModifiable yes;
+// Include defaults parameters from master dictionary
+#includeEtc "caseDicts/meshQualityDict"
 
 
 // ************************************************************************* //

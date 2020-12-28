@@ -18,8 +18,8 @@ FoamFile
 // Which of the steps to run
 castellatedMesh true;//JN: "LEGO" mesh
 snap            false;//JN: real mesh
-addLayers       false;//JN: layers, we will not use this in this tutorial
-
+addLayers       false;//LP: should be added as we are doing turbulent simulation
+//LP: this should be updated to use "snap" i believe as castellatedMesh doesn't account for the curvature of our geometry
 
 // Geometry. Definition of all surfaces. All surfaces are of class
 // searchableSurface.
@@ -44,10 +44,10 @@ geometry
         type triSurfaceMesh;
         name sides;
     }
-    wall.stl
+    walls.stl
     {
         type triSurfaceMesh;
-        name wall;
+        name walls;
     }
 };
 
@@ -105,7 +105,7 @@ castellatedMeshControls
             level 0;
         }
         {
-            file "wall.eMesh";
+            file "walls.eMesh";
             level 0;
         }
 
@@ -129,17 +129,17 @@ castellatedMeshControls
             // Surface-wise min and max refinement level
             level (0 0);//JN: refinement defined by surfaces - i.e. stl surfaces
         }
-	outlet
+	    outlet
         {
             // Surface-wise min and max refinement level
             level (0 0);
         }
-	sides
+	    sides
         {
             // Surface-wise min and max refinement level
             level (0 0);
         }
-	wall
+	    walls
         {
             // Surface-wise min and max refinement level
             level (0 0);
@@ -178,7 +178,7 @@ castellatedMeshControls
     // NOTE: This point should never be on a face, always inside a cell, even
     // after refinement.
     // This is an outside point locationInMesh (-0.033 -0.033 0.0033);
-    locationInMesh (0 0 0); //JN: point inside our geometry
+    locationInMesh (29 1 0.5); //JN: point inside our geometry LP: this is defined so cells outside are disgarded 
 
     // Whether any faceZones (as specified in the refinementSurfaces)
     // are only on the boundary of corresponding cellZones or also allow
@@ -190,7 +190,7 @@ castellatedMeshControls
 
 // Settings for the snapping.
 //JN: Mostly standard settings
-snapControls
+snapControls //LP: should play around with this for curved geometry
 {
     //- Number of patch smoothing iterations before finding correspondence
     //  to surface
@@ -237,7 +237,7 @@ addLayersControls
     // Per final patch (so not geometry!) the layer information
     layers
     {
-        "flange_.*"
+        "flange_.*" //this is copied from "flange"
         {
             nSurfaceLayers 1;
         }

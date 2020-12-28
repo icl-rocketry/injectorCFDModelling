@@ -9,35 +9,15 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       polyBoundaryMesh;
+    class       uniformDimensionedScalarField;
     location    "constant/polyMesh";
-    object      boundary;
+    object      level0Edge;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-3
-(
-    outlet
-    {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          83;
-        startFace       3248;
-    }
-    sides
-    {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          599;
-        startFace       3331;
-    }
-    walls
-    {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          202;
-        startFace       3930;
-    }
-)
+dimensions      [0 1 0 0 0 0 0];
+value           0.12;
+
+
 
 // ************************************************************************* //

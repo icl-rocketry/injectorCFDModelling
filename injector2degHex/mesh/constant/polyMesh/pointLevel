@@ -9,35 +9,12 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       polyBoundaryMesh;
+    class       labelList;
     location    "constant/polyMesh";
-    object      boundary;
+    object      pointLevel;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-3
-(
-    outlet
-    {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          83;
-        startFace       3248;
-    }
-    sides
-    {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          599;
-        startFace       3331;
-    }
-    walls
-    {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          202;
-        startFace       3930;
-    }
-)
+1712{0}
 
 // ************************************************************************* //

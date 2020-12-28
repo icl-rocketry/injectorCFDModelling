@@ -11,41 +11,22 @@ FoamFile
     format      ascii;
     class       dictionary;
     location    "system";
-    object      controlDict;
+    object      fvSchemes;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-//Just dummy entries, don't worry.
+//Forget this dictionary
 
-application     icoFoam;
+gradSchemes
+{
+}
 
-startFrom       startTime;
+divSchemes
+{
+}
 
-startTime       0;
-
-stopAt          endTime;
-
-endTime         50;
-
-deltaT          1;
-
-writeControl    timeStep;
-
-writeInterval   20;
-
-purgeWrite      0;
-
-writeFormat     ascii;
-
-writePrecision  6;
-
-writeCompression off;
-
-timeFormat      general;
-
-timePrecision   6;
-
-runTimeModifiable yes;
-
+laplacianSchemes
+{
+}
 
 // ************************************************************************* //
