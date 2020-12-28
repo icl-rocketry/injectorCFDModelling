@@ -22,7 +22,7 @@ internalField   uniform 0;
 
 boundaryField
 {
-    allBoundary
+    inlet
     {
         type            calculated;
     }

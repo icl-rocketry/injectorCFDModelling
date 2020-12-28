@@ -17,32 +17,33 @@ FoamFile
 
 4
 (
-    allBoundary
+    inlet
     {
-        type            patch;
-        nFaces          240;
-        startFace       7779;
+        type            wall;
+        inGroups        1(wall);
+        nFaces          4987;
+        startFace       256280;
     }
     outlet
     {
         type            wall;
         inGroups        1(wall);
-        nFaces          141;
-        startFace       8019;
+        nFaces          4987;
+        startFace       261267;
     }
     sides
     {
         type            wall;
         inGroups        1(wall);
-        nFaces          660;
-        startFace       8160;
+        nFaces          6732;
+        startFace       266254;
     }
     walls
     {
         type            wall;
         inGroups        1(wall);
-        nFaces          321;
-        startFace       8820;
+        nFaces          10458;
+        startFace       272986;
     }
 )
 

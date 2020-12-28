@@ -17,9 +17,8 @@ FoamFile
 
 // Which of the steps to run
 castellatedMesh true;//JN: "LEGO" mesh
-snap            false;//JN: real mesh
+snap            false;//JN: real mesh LP: change to true for creation of actual mesh
 addLayers       false;//LP: should be added as we are doing turbulent simulation
-//LP: this should be updated to use "snap" i believe as castellatedMesh doesn't account for the curvature of our geometry
 
 // Geometry. Definition of all surfaces. All surfaces are of class
 // searchableSurface.
@@ -178,7 +177,7 @@ castellatedMeshControls
     // NOTE: This point should never be on a face, always inside a cell, even
     // after refinement.
     // This is an outside point locationInMesh (-0.033 -0.033 0.0033);
-    locationInMesh (29 1 0.5); //JN: point inside our geometry LP: this is defined so cells outside are disgarded 
+    locationInMesh (29 5 0.5); //JN: point inside our geometry LP: this is defined so cells outside are disgarded 
 
     // Whether any faceZones (as specified in the refinementSurfaces)
     // are only on the boundary of corresponding cellZones or also allow
