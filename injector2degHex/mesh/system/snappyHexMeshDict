@@ -17,8 +17,9 @@ FoamFile
 
 // Which of the steps to run
 castellatedMesh true;//JN: "LEGO" mesh
-snap            false;//JN: real mesh LP: change to true for creation of actual mesh
-addLayers       false;//LP: should be added as we are doing turbulent simulation
+snap            true;//JN: real mesh LP: change to true for creation of actual mesh
+addLayers       false;//LP: should be added as we are doing turbulent simulation. these should be centered around our "injector hole" geometry. this may mean we should input it 
+// as seperate stl files, like we've already done
 
 // Geometry. Definition of all surfaces. All surfaces are of class
 // searchableSurface.

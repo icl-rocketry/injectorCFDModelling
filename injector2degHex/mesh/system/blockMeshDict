@@ -16,7 +16,7 @@ FoamFile
 
 convertToMeters 1;//0.001; LP: .stl has no dimensions
 
-vertices
+vertices //LP: this defines a wedge 
 (
     (-2   -2   0) // 0
     ( 32  -2  -2) // 1
@@ -30,17 +30,17 @@ vertices
 
 blocks
 (
-    hex (0 1 2 3 0 5 6 3) (200 20 200) simpleGrading (5 1 5)//coarse grid - we will refine in snappyHexMeshDict
-    //hex collapses vertices onto each other to create 6 sided wedge block. here we collapse 4 to 0 & 7 to 3
+    hex (0 1 2 3 0 5 6 3) (200 20 200) simpleGrading (5 1 5)
+    //LP: hex collapses vertices onto each other to create 6 sided wedge block. here we collapse 4 to 0 & 7 to 3
 );
 
 edges
 (
 );
 
-boundary
+boundary //LP: these need to be updated to include the correct patch types, so wall, patch, symmetry
 (
-    allBoundary//Don't worry about these settings
+    allBoundary //LP: why is this even called allBoundary. useless name
     {
         type patch;
         faces
@@ -51,6 +51,7 @@ boundary
             (1 5 0 0)
             (0 3 2 1)
             (0 5 6 3)
+            //LP: the following describe the original hexahedron
             // (3 7 6 2)
             // (0 4 7 3)
             // (2 6 5 1)

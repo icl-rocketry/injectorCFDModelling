@@ -6,6 +6,5 @@ Commands to be executed to create the mesh:
 - snappyHexMesh -overwrite
 
 remeshing:
-- rm -r constant/polyMesh
 - blockMesh
 - snappyHexMesh -overwrite
