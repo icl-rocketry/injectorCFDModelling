@@ -15,13 +15,33 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-1
+4
 (
-    allBoundary
+    inlet
     {
         type            patch;
-        nFaces          96000;
-        startFace       2352000;
+        nFaces          2073;
+        startFace       106764;
+    }
+    outlet
+    {
+        type            patch;
+        nFaces          2073;
+        startFace       108837;
+    }
+    walls
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          4956;
+        startFace       110910;
+    }
+    sides
+    {
+        type            symmetry;
+        inGroups        1(symmetry);
+        nFaces          2646;
+        startFace       115866;
     }
 )
 

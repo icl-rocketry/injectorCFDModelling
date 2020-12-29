@@ -9,36 +9,15 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       pointScalarField;
-    location    "0";
-    object      pointLevel;
+    class       uniformDimensionedScalarField;
+    location    "constant/polyMesh";
+    object      level0Edge;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 0 0 0 0 0 0];
+dimensions      [0 1 0 0 0 0 0];
+value           0;
 
-
-internalField   uniform 0;
-
-boundaryField
-{
-    inlet
-    {
-        type            calculated;
-    }
-    outlet
-    {
-        type            calculated;
-    }
-    walls
-    {
-        type            calculated;
-    }
-    sides
-    {
-        type            symmetry;
-    }
-}
 
 
 // ************************************************************************* //
