@@ -14,7 +14,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-convertToMeters 1;//0.001; LP: .stl has no dimensions
+convertToMeters 0.001;// LP: .stl has no dimensions
 
 vertices //LP: this defines a wedge 
 (
@@ -30,7 +30,7 @@ vertices //LP: this defines a wedge
 
 blocks
 (
-    hex (0 1 2 3 0 5 6 3) (60 20 60) simpleGrading (20 1 20) //x & z need to be fine enough to show injector hole on mesh
+    hex (0 1 2 3 0 5 6 3) (30 90 5) simpleGrading (5 1 1) //LP: x & z need to be fine enough to show injector hole on mesh
     //LP: hex collapses vertices onto each other to create 6 sided wedge block. here we collapse 4 to 0 & 7 to 3
 );
 

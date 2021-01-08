@@ -17,9 +17,9 @@ FoamFile
 
 // Which of the steps to run
 castellatedMesh true;//JN: "LEGO" mesh
-snap            false;//JN: real mesh LP: change to true for creation of actual mesh
+snap            false;//JN: real mesh LP: consider changing to true for creation of actual mesh i 
 addLayers       false;//LP: should be added as we are doing turbulent simulation. these should be centered around our "injector hole" geometry. this may mean we should input the 
-// hole as seperate stl files, like we've already done
+// hole as seperate stl files, subdividing "walls" file
 
 // Geometry. Definition of all surfaces. All surfaces are of class
 // searchableSurface.
@@ -32,21 +32,25 @@ geometry
     inlet.stl//JN: name of the stl file
     {
         type triSurfaceMesh;
+        scale 0.001;//LP: adds units to stl files
         name inlet;//JN: name we will use in this dictionary
     }
     outlet.stl
     {
         type triSurfaceMesh;
+        scale 0.001;
         name outlet;
     }
     sides.stl
     {
         type triSurfaceMesh;
+        scale 0.001;
         name sides;
     }
     walls.stl
     {
         type triSurfaceMesh;
+        scale 0.001;
         name walls;
     }
 };
@@ -137,7 +141,7 @@ castellatedMeshControls
 	    sides
         {
             // Surface-wise min and max refinement level
-            level (0 0);
+            level (0 2);
         }
 	    walls
         {
@@ -147,7 +151,7 @@ castellatedMeshControls
 
     }
 
-    resolveFeatureAngle 30;
+    resolveFeatureAngle 90;
 
 
     // Region-wise refinement
@@ -163,7 +167,7 @@ castellatedMeshControls
     //   needs to be closed for this to be possible.
     // - outside. Same but cells outside.
 
-    refinementRegions
+    refinementRegions //LP: pretty sure this is what we need to use to get a mesh similar to UoT
     {
 	//JN: here we could additionally refine the mesh
     }
@@ -178,7 +182,7 @@ castellatedMeshControls
     // NOTE: This point should never be on a face, always inside a cell, even
     // after refinement.
     // This is an outside point locationInMesh (-0.033 -0.033 0.0033);
-    locationInMesh (29 5 0.5); //JN: point inside our geometry LP: this is defined so cells outside are disgarded 
+    locationInMesh (0.029 0.005 0.0005); //JN: point inside our geometry LP: this is defined so cells outside are disgarded 
 
     // Whether any faceZones (as specified in the refinementSurfaces)
     // are only on the boundary of corresponding cellZones or also allow
@@ -190,7 +194,7 @@ castellatedMeshControls
 
 // Settings for the snapping.
 //JN: Mostly standard settings
-snapControls //LP: should play around with this for curved geometry
+snapControls //LP: could play around with this for curved geometry
 {
     //- Number of patch smoothing iterations before finding correspondence
     //  to surface
