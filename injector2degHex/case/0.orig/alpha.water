@@ -9,51 +9,39 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       polyBoundaryMesh;
-    location    "constant/polyMesh";
-    object      boundary;
+    class       volScalarField;
+    location    "0";
+    object      alpha.water;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-5
-(
+dimensions      [0 0 0 0 0 0 0];
+
+internalField   uniform 0; // initially filled with vapour
+
+
+boundaryField
+{
     inlet
     {
-        type            patch;
-        nFaces          0;
-        startFace       7047;
+        type            fixedValue;
+        value           uniform 1;
     }
     outlet
     {
-        type            patch;
-        nFaces          64;
-        startFace       7047;
+        type            inletOutlet; // same as zeroGradient but switches to inletValue
+        inletValue      uniform 0;   // in the case of backflow
+        value           uniform 0;   // value for inlet from patch
     }
     walls
     {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          0;
-        startFace       7111;
+        type            zeroGradient;
     }
     sides
     {
         type            symmetry;
-        inGroups        1(symmetry);
-        nFaces          1884;
-        startFace       7111;
     }
-    procBoundary1to2
-    {
-        type            processor;
-        inGroups        1(processor);
-        nFaces          122;
-        startFace       8995;
-        matchTolerance  0.0001;
-        transform       unknown;
-        myProcNo        1;
-        neighbProcNo    2;
-    }
-)
+}
+
 
 // ************************************************************************* //

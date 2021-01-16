@@ -24,30 +24,34 @@ boundaryField
 {
     inlet
     {
-        type            pressureInletOutletVelocity;
-        value           nonuniform List<vector> 0();
+        type            zeroGradient; // assumes fully developed 
+        
     }
     outlet
     {
-        type            zeroGradient;
+        type            inletOutlet; // same as zeroGradient but switches to inletValue
+        inletValue      uniform (0 0 0);   // in the case of backflow
+        value           uniform (0 0 0);   // value for inlet from patch
     }
+    /*
+    was:
+    inlet
+    {
+        type            pressureInletOutletVelocity;
+        value           uniform (0 0 0);
+    }
+    outlet
+    {
+        type            zeroGradient; // assumes fully developed 
+    }
+    */
     walls
     {
-        type            noSlip;
+        type            noSlip; // standard BC pretty sure
     }
     sides
     {
-        type            symmetry;
-    }
-    procBoundary3to0
-    {
-        type            processor;
-        value           uniform (0 0 0);
-    }
-    procBoundary3to4
-    {
-        type            processor;
-        value           uniform (0 0 0);
+        type            symmetry; // believe should be "cyclic" like in p_rgh
     }
 }
 

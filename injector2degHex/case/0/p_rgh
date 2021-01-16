@@ -16,14 +16,14 @@ FoamFile
 
 dimensions      [1 -1 -2 0 0 0 0];
 
-internalField   uniform 100000;
+internalField   uniform 0; //gauge pressure - possible as using incompressable solver
 
 boundaryField //LP: https://www.openfoam.com/documentation/user-guide/standard-boundaryconditions.php
 {
     inlet
     {
         type            fixedValue;
-        value       uniform 5e5;
+        value           uniform 2e5;
 	// type            prghTotalPressure;
     //     p0           	uniform 2000000;
 	// value		uniform 2000000;
@@ -33,7 +33,7 @@ boundaryField //LP: https://www.openfoam.com/documentation/user-guide/standard-b
     outlet
     {	
 	    type            fixedValue;
-    	value		uniform 1e5;
+    	value		    uniform 0;
     }
 
     walls

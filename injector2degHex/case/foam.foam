@@ -1,13 +1,18 @@
 to run sim:
 
+- cp -r 0.orig/* 0/
 - cp -r ../mesh/constant/polyMesh constant
-- setFields (this tells where we will have liquid to begin with)
-- potentialFoam -pName p_rgh -writephi (this does... something)
+- // ignore for now: setFields (this tells where we will have liquid to begin with)
+- potentialFoam -pName p_rgh -writephi (calculates internalField of phi and U)
+- interPhaseChangeFoam
+
+
+**optional**
+for parallel:
 - decomposePar
 - mpirun -np 6 interPhaseChangeFoam -parallel (6 for my 6 core machine)
 - reconstructPar 
-
-**optional**
+for parallel & minor speed increments:
 - mpirun -np 6 interPhaseChangeFoam -parallel > log.interPhaseChangeFoam &  (this reduces the difference between ExecutionTime and ClockTime)
 - tail -f log.interPhaseChangeFoam (this allows you to follow it as usual)
 
@@ -17,3 +22,7 @@ to re-run:
 - rm -r processor*
 - rm -r 0.*
 then run commands as usual
+
+to then fully reset:
+- rm -r 0/*
+- rm -r constant/polyMesh
