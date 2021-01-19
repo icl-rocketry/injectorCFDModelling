@@ -121,7 +121,7 @@ castellatedMeshControls
     //   needs to be closed for this to be possible.
     // - outside. Same but cells outside.
 
-    refinementRegions //LP: pretty sure this is what we need to use to get a mesh similar to UoT
+    refinementRegions
     {
 	//JN: here we could additionally refine the mesh
     }

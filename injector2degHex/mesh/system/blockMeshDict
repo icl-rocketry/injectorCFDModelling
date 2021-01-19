@@ -26,7 +26,7 @@ z1          #eval{$z2 * -1.0};
 x           #eval{$radius*cos($radAngle)};
 
 
-vertices
+vertices // whether you use block or wedge is irrelevant, as it's collapsed down by ignoring vertices 4 & 7 anyway
 (
     // block
     // (0 0 $z1) // 0
@@ -94,7 +94,7 @@ boundary
     }
     side1
     {
-        type patch;
+        type patch; // collapseEdges doesn't work with cyclic BCs, so the mesh is created with type patch & edited later in /constant/polyMesh
         // type cyclic;
         // neighbourPatch side2;
         // type symmetry;
