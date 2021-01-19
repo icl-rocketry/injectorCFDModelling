@@ -40,6 +40,7 @@ boundaryField
     side1
     {
         type            cyclic;
+<<<<<<< HEAD
         neighbourPatch  side2;
     }
     side2
@@ -47,6 +48,21 @@ boundaryField
         type            cyclic;
         neighbourPatch  side1;
     }
+=======
+    }
+<<<<<<< HEAD:injector2degHex/case_interFoam/processor2/0/alpha.water
+    side2
+    {
+        type            cyclic;
+    }
+    procBoundary2to1
+    {
+        type            processor;
+        value           uniform 1;
+    }
+=======
+>>>>>>> baef0c4ff826b6b946fed9c15dc59c41c22ef7f6:injector2degHex/case_interFoam/0.orig/alpha.water
+>>>>>>> baef0c4ff826b6b946fed9c15dc59c41c22ef7f6
 }
 
 

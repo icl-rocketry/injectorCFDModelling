@@ -24,17 +24,32 @@ boundaryField
 {
     inlet
     {
+<<<<<<< HEAD:injector2degHex/case_interFoam/processor0/0/U
         type            zeroGradient;
     }
     outlet
     {
         type            pressureInletOutletVelocity;
         value           nonuniform List<vector> 0();
+=======
+        type            zeroGradient; // assumes fully developed 
+        
     }
-    walls
+    outlet
     {
-        type            noSlip;
+        type            inletOutlet; // same as zeroGradient but switches to inletValue
+        inletValue      uniform (0 0 0);   // in the case of backflow
+        value           uniform (0 0 0);   // value for inlet from patch
+>>>>>>> baef0c4ff826b6b946fed9c15dc59c41c22ef7f6:injector2degHex/case_interFoam/0.orig/U
     }
+    /*
+    was:
+    inlet
+    {
+        type            pressureInletOutletVelocity;
+        value           uniform (0 0 0);
+    }
+<<<<<<< HEAD:injector2degHex/case_interFoam/processor0/0/U
     side1
     {
         type            cyclic;
@@ -49,14 +64,24 @@ boundaryField
         value           uniform (0 0 0);
     }
     procBoundary0to3
+=======
+    outlet
     {
-        type            processor;
-        value           uniform (0 0 0);
+        type            zeroGradient; // assumes fully developed 
     }
-    procBoundary0to4
+    */
+    walls
+>>>>>>> baef0c4ff826b6b946fed9c15dc59c41c22ef7f6:injector2degHex/case_interFoam/0.orig/U
     {
-        type            processor;
-        value           uniform (0 0 0);
+        type            noSlip; // standard BC pretty sure
+    }
+<<<<<<< HEAD:injector2degHex/case_interFoam/processor0/0/U
+    procBoundary0to4
+=======
+    sides
+>>>>>>> baef0c4ff826b6b946fed9c15dc59c41c22ef7f6:injector2degHex/case_interFoam/0.orig/U
+    {
+        type            symmetry; // believe should be "cyclic" like in p_rgh
     }
 }
 
