@@ -1,0 +1,79 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2012                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _7bdb509494-20201222 OPENFOAM=2012
+Arch   : "LSB;label=32;scalar=64"
+Exec   : blockMesh
+Date   : Jan 17 2021
+Time   : 22:42:21
+Host   : luc-desktop
+PID    : 12291
+I/O    : uncollated
+Case   : /home/luc/openfoam/injectorCFDModelling/injector2degHex/mesh
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Creating block mesh from "system/blockMeshDict"
+Creating block edges
+No non-planar block faces defined
+Creating topology blocks
+Creating topology patches
+
+Creating block mesh topology
+
+Check topology
+
+	Basic statistics
+		Number of internal faces : 0
+		Number of boundary faces : 6
+		Number of defined boundary faces : 6
+		Number of undefined boundary faces : 0
+	Checking patch -> block consistency
+
+Creating block offsets
+Creating merge list (topological search)...
+Deleting polyMesh directory "constant/polyMesh"
+
+Creating polyMesh from blockMesh
+Creating patches
+Creating cells
+Creating points with scale 0.001
+    Block 0 cell size :
+        i : 0.000134455 .. 0.000941182
+        j : 0.000277778 .. 0.000277778
+        k : 0 .. 0
+
+
+There are no merge patch pairs
+
+Detected cyclic patches; ordering boundary faces
+
+Writing polyMesh with 0 cellZones
+----------------
+Mesh Information
+----------------
+  boundingBox: (0 0 -0.000436303) (0.0249962 0.05 0.000436303)
+  nPoints: 44164
+  nCells: 32400
+  nFaces: 108720
+  nInternalFaces: 85680
+----------------
+Patches
+----------------
+  patch 0 (start: 85680 size: 180) name: inlet
+  patch 1 (start: 85860 size: 180) name: outlet
+  patch 2 (start: 86040 size: 1080) name: walls
+  patch 3 (start: 87120 size: 10800) name: side1
+  patch 4 (start: 97920 size: 10800) name: side2
+
+End
+

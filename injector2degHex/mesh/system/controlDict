@@ -15,7 +15,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-//Just dummy entries, don't worry.
+//has to exist for meshing utils to run
 
 application     icoFoam;
 

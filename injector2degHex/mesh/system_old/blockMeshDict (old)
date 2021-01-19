@@ -1,0 +1,102 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  4.0                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 0.001;// LP: .stl has no dimensions
+
+vertices //LP: this defines a wedge 
+(
+    (-2   -2   0  ) // 0
+    ( 32  -2   0  ) // 1
+    ( 32   82  0  ) // 2
+    (-2    82  0  ) // 3
+    (-2   -2   1.5) // 4
+    ( 32  -2   1.5) // 5
+    ( 32   82  1.5) // 6
+    (-2    82  1.5) // 7
+);
+
+blocks
+(
+    hex (0 1 2 3 0 5 6 3) (30 180 5) simpleGrading (5 1 1) //LP: x & z need to be fine enough to show injector hole on mesh
+    //LP: hex collapses vertices onto each other to create 6 sided wedge block. here we collapse 4 to 0 & 7 to 3
+);
+
+edges
+(
+);
+
+boundary //LP: these need to be updated to include the correct patch types, so wall, patch, symmetry
+(
+    inlet
+    {
+        type patch;
+        faces
+        (
+            (3 3 6 2)
+        );
+    }
+    outlet
+    {
+        type patch;
+        faces
+        (
+            (1 5 0 0)
+        );
+    }
+    walls
+    {
+        type wall;
+        faces
+        (
+            (2 6 5 1)
+            (0 0 3 3)
+        );
+    }
+    sides
+    {
+        type symmetry;
+        faces
+        (
+            (0 5 6 3)
+            (0 3 2 1)
+        );
+
+    }
+    //LP: commented out but keeping in case new mesh boundary conditions don't work as expected
+    // allBoundary
+    // {
+    //     type patch;
+    //     faces
+    //     (
+    //         (3 3 6 2)
+    //         (0 0 3 3)
+    //         (2 6 5 1)
+    //         (1 5 0 0)
+    //         (0 3 2 1)
+    //         (0 5 6 3)
+            //LP: the following describe the original hexahedron
+            // (3 7 6 2)
+            // (0 4 7 3)
+            // (2 6 5 1)
+            // (1 5 4 0)
+            // (0 3 2 1)
+            // (4 5 6 7)
+        // );
+    // }
+);
+
+
+// ************************************************************************* //

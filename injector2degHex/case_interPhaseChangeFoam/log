@@ -1,0 +1,12 @@
+----------------------------------------------
+WARNING: Linux kernel CMA support was requested via the
+btl_vader_single_copy_mechanism MCA variable, but CMA support is
+not available due to restrictive ptrace settings.
+
+The vader shared memory BTL will fall back on another single-copy
+mechanism if one is available. This may result in lower performance.
+
+  Local host: luc-desktop
+--------------------------------------------------------------------------
+[luc-desktop:22854] 5 more processes have sent help message help-btl-vader.txt / cma-permission-denied
+[luc-desktop:22854] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages

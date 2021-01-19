@@ -1,0 +1,53 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2012                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      alpha.water;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 0 0 0 0];
+
+internalField   uniform 0; // initially filled with vapour
+
+
+boundaryField
+{
+    inlet
+    {
+        type            fixedValue;
+        value           uniform 1;
+    }
+    outlet
+    {
+        type            inletOutlet; // same as zeroGradient but switches to inletValue
+        inletValue      uniform 0;   // in the case of backflow
+        value           uniform 0;   // value for inlet from patch
+    }
+    walls
+    {
+        type            zeroGradient;
+    }
+    side1
+    {
+        type            cyclic;
+        neighbourPatch  side2;
+    }
+    side2
+    {
+        type            cyclic;
+        neighbourPatch  side1;
+    }
+}
+
+
+// ************************************************************************* //

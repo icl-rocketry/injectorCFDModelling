@@ -8,3 +8,9 @@ Commands to be executed to create the mesh:
 remeshing:
 - blockMesh (this automatically deletes previous mesh from constant)
 - snappyHexMesh -overwrite
+
+
+blockMesh
+surfaceFeatureExtract
+collapseEdges -overwrite
+snappyHexMesh -overwrite

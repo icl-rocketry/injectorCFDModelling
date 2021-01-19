@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  4.0                                   |
+|  \\    /   O peration     | Version:  2012                                   |
 |   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -17,7 +17,7 @@ FoamFile
 
 // Which of the steps to run
 castellatedMesh true;//JN: "LEGO" mesh
-snap            false;//JN: real mesh LP: consider changing to true for creation of actual mesh i 
+snap            false;//JN: real mesh LP: consider changing to true for creation of actual mesh
 addLayers       false;//LP: should be added as we are doing turbulent simulation. these should be centered around our "injector hole" geometry. this may mean we should input the 
 // hole as seperate stl files, subdividing "walls" file
 
@@ -29,28 +29,10 @@ addLayers       false;//LP: should be added as we are doing turbulent simulation
 // - to 'snap' the mesh boundary to the surface
 geometry
 {
-    inlet.stl//JN: name of the stl file
+    injector_negative.stl//JN: name of the stl file
     {
         type triSurfaceMesh;
         scale 0.001;//LP: adds units to stl files
-        name inlet;//JN: name we will use in this dictionary
-    }
-    outlet.stl
-    {
-        type triSurfaceMesh;
-        scale 0.001;
-        name outlet;
-    }
-    sides.stl
-    {
-        type triSurfaceMesh;
-        scale 0.001;
-        name sides;
-    }
-    walls.stl
-    {
-        type triSurfaceMesh;
-        scale 0.001;
         name walls;
     }
 };
@@ -85,7 +67,7 @@ castellatedMeshControls
     // Number of buffer layers between different levels.
     // 1 means normal 2:1 refinement restriction, larger means slower
     // refinement.
-    nCellsBetweenLevels 10;//JN: number of cells between refinement levels
+    nCellsBetweenLevels 100;//JN: number of cells between refinement levels
 
 
 
@@ -97,22 +79,9 @@ castellatedMeshControls
     features
     (
         {
-            file "inlet.eMesh";
+            file "injector_negative.eMesh";
             level 0;//JN: refinement defined by features
         }
-        {
-            file "outlet.eMesh";
-            level 0;
-        }
-        {
-            file "sides.eMesh";
-            level 0;
-        }
-        {
-            file "walls.eMesh";
-            level 0;
-        }
-
     );
 
 
@@ -128,25 +97,10 @@ castellatedMeshControls
 
     refinementSurfaces
     {
-        inlet
+        walls
         {
             // Surface-wise min and max refinement level
             level (0 0);//JN: refinement defined by surfaces - i.e. stl surfaces
-        }
-	    outlet
-        {
-            // Surface-wise min and max refinement level
-            level (0 0);
-        }
-	    sides
-        {
-            // Surface-wise min and max refinement level
-            level (0 2);
-        }
-	    walls
-        {
-            // Surface-wise min and max refinement level
-            level (0 0);
         }
 
     }
@@ -182,7 +136,8 @@ castellatedMeshControls
     // NOTE: This point should never be on a face, always inside a cell, even
     // after refinement.
     // This is an outside point locationInMesh (-0.033 -0.033 0.0033);
-    locationInMesh (0.029 0.005 0.0005); //JN: point inside our geometry LP: this is defined so cells outside are disgarded 
+    // locationInMesh (0.015 0.005 0.00025); //JN: point inside our geometry LP: this is defined so cells outside are disgarded 
+    locationInMesh (5e-3 5e-3 0);
 
     // Whether any faceZones (as specified in the refinementSurfaces)
     // are only on the boundary of corresponding cellZones or also allow

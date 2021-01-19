@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  4.0                                   |
+|  \\    /   O peration     | Version:  2012                                   |
 |   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -14,37 +14,61 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-convertToMeters 0.001;// LP: .stl has no dimensions
+scale 0.001;
 
-vertices //LP: this defines a wedge 
+angle   1; //angle either side of xy plane
+radius  25;
+height  50;
+
+radAngle    #eval{degToRad($angle)};
+z2          #eval{$radius*sin($radAngle)};
+z1          #eval{$z2 * -1.0};
+x           #eval{$radius*cos($radAngle)};
+
+
+vertices
 (
-    (-2   -2   0  ) // 0
-    ( 32  -2   0  ) // 1
-    ( 32   82  0  ) // 2
-    (-2    82  0  ) // 3
-    (-2   -2   1.5) // 4
-    ( 32  -2   1.5) // 5
-    ( 32   82  1.5) // 6
-    (-2    82  1.5) // 7
+    // block
+    // (0 0 $z1) // 0
+    // ($x 0 $z1) // 1
+    // ($x $height $z1) // 2
+    // (0 $height $z1) // 3
+
+    // (0 0 $z2) // 4
+    // ($x 0 $z2) // 5
+    // ($x $height $z2) // 6
+    // (0 $height $z2) // 7
+
+    // wedge
+    (0 0 0) // 0
+    ($x 0 $z1) // 1
+    ($x $height $z1) // 2
+    (0 $height 0) // 3
+
+    (0 0 0) // 4
+    ($x 0 $z2) // 5
+    ($x $height $z2) // 6
+    (0 $height 0) // 7
 );
 
 blocks
 (
-    hex (0 1 2 3 0 5 6 3) (30 90 5) simpleGrading (5 1 1) //LP: x & z need to be fine enough to show injector hole on mesh
-    //LP: hex collapses vertices onto each other to create 6 sided wedge block. here we collapse 4 to 0 & 7 to 3
+    hex (0 1 2 3 0 5 6 3) (60 200 2) simpleGrading (7 1 1) // collapses vertices from block to form wedge
+    // hex (0 1 2 3 4 5 6 7) (30 180 5) simpleGrading (15 1 1)
 );
 
 edges
 (
 );
 
-boundary //LP: these need to be updated to include the correct patch types, so wall, patch, symmetry
+boundary
 (
     inlet
     {
         type patch;
         faces
         (
+            // (3 7 6 2)
             (3 3 6 2)
         );
     }
@@ -53,6 +77,7 @@ boundary //LP: these need to be updated to include the correct patch types, so w
         type patch;
         faces
         (
+            // (1 5 4 0)
             (1 5 0 0)
         );
     }
@@ -61,41 +86,35 @@ boundary //LP: these need to be updated to include the correct patch types, so w
         type wall;
         faces
         (
+            // (2 6 5 1)
+            // (4 0 3 7)
             (2 6 5 1)
             (0 0 3 3)
         );
     }
-    sides
+    side1
     {
-        type symmetry;
+        type patch;
+        // type cyclic;
+        // neighbourPatch side2;
+        // type symmetry;
         faces
         (
-            (0 5 6 3)
+            // (4 5 6 7) 
+            (0 5 6 3)   
+        );
+    }
+    side2
+    {
+        type patch;
+        // type cyclic;
+        // neighbourPatch side1;
+        // type symmetry;
+        faces
+        (
             (0 3 2 1)
         );
-
     }
-    //LP: commented out but keeping in case new mesh boundary conditions don't work as expected
-    // allBoundary
-    // {
-    //     type patch;
-    //     faces
-    //     (
-    //         (3 3 6 2)
-    //         (0 0 3 3)
-    //         (2 6 5 1)
-    //         (1 5 0 0)
-    //         (0 3 2 1)
-    //         (0 5 6 3)
-            //LP: the following describe the original hexahedron
-            // (3 7 6 2)
-            // (0 4 7 3)
-            // (2 6 5 1)
-            // (1 5 4 0)
-            // (0 3 2 1)
-            // (4 5 6 7)
-        // );
-    // }
 );
 
 
