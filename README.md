@@ -24,23 +24,23 @@ https://drive.google.com/drive/u/0/folders/1pLNUjTEDKc12vxf4TFTfJRrxMRk-E3q4
 - cell refinement near the injector is created using grading in the x direction 
 - may have to use multiple blocks & merge them to create mesh similar to UoT, with defined refinement around each injector hole.
     Doing this by hand sounds mind numbing if running a decent no. of cases, a matlab or python script could automate it somewhat
-<p>
+</p>
 
-<h2>turbulence<h2>
+<h2>turbulence</h2>
 <p>
 - currently no turbulence model implemented<br/>
 - Piotr proposes k-epsilon, as seen in propeller tutorial case<br/>
-<p>
+</p>
     
-<h2>cavitation<h2>
+<h2>cavitation</h2>
 <p>
 - currently SchnerrSauer coeffs are exactly as seen in the cavitating bullet tutorial<br/>
 - can calculate these using Rayleigh–Plesset equation (see paper in literature for more details<br/>
-<p>
+</p>
     
-<h2>current models<h2>
+<h2>current models</h2>
 <p>
 - all run as laminar sims<br/>
 - appear to show cavitation nicely, which is promising<br/>
 - do not yet know how to extract mass/volumetric flow that would allow us to see if choking is occuring<br/>
-<p>
+</p>
