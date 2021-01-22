@@ -52,5 +52,21 @@ maxDeltaT       1;
 
 //LP: perhaps use eddie's custom restriction block in matlab to predict the maximum velocity, and find what our mesh size should be for ideal courant number from that?
 
+// still trying to find out how to acc pull the mass/volumetric flow
+functions
+{
+
+    flowRate  // pick your name
+    {
+         type           surfaceFieldValue;
+         libs           ("libfieldFunctionObjects.so");
+         fields         (phi);
+         writeFields    no;
+         regionType     patch;
+         name           inlet;  // put the name of your patch/outlet here
+         operation      weightedAreaIntegrate;
+         weightField    alpha.water;
+    }
+}
 
 // ************************************************************************* //

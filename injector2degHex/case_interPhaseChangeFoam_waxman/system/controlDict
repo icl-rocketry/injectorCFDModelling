@@ -24,7 +24,7 @@ stopAt          endTime; //used to be endTime, writeNow for emergency stop
 
 endTime         1;//was 3ms
 
-deltaT          1e-5;//1e-5;
+deltaT          1e-4;//1e-5;
 
 writeControl    adjustable;
 
