@@ -21,15 +21,15 @@ radius  0.75;
 Radius  12.70;
 height  18.42;
 
-radAngle    #calc "degToRad($angle)";
-z2          #calc "$radius*sin($radAngle)";
-z1          #calc "-$z2";
-x           #calc "$radius*cos($radAngle)";
-Z2          #calc "$Radius*sin($radAngle)";
-Z1          #calc "-$Z2";
-X           #calc "$Radius*cos($radAngle)";
-heightin    #calc "-$height";
-heightout   #calc "$height + $height";
+radAngle    #eval "degToRad($angle)";
+z2          #eval "$radius*sin($radAngle)";
+z1          #eval "-$z2";
+x           #eval "$radius*cos($radAngle)";
+Z2          #eval "$Radius*sin($radAngle)";
+Z1          #eval "-$Z2";
+X           #eval "$Radius*cos($radAngle)";
+heightin    #eval "-$height";
+heightout   #eval "$height + $height";
 
 
 vertices // whether you use block or wedge is irrelevant, as it's collapsed down by ignoring vertices 4 & 7 anyway
