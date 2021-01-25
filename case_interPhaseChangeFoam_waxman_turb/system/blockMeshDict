@@ -1,0 +1,185 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2012                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+scale 0.001;
+
+angle   2.5; //angle either side of xy plane
+radius  0.75;
+Radius  12.70;
+height  18.42;
+
+radAngle    #calc "degToRad($angle)";
+z2          #calc "$radius*sin($radAngle)";
+z1          #calc "-$z2";
+x           #calc "$radius*cos($radAngle)";
+Z2          #calc "$Radius*sin($radAngle)";
+Z1          #calc "-$Z2";
+X           #calc "$Radius*cos($radAngle)";
+heightin    #calc "-$height";
+heightout   #calc "$height + $height";
+
+
+vertices // whether you use block or wedge is irrelevant, as it's collapsed down by ignoring vertices 4 & 7 anyway
+(
+    // block
+    // (0 0 $z1) // 0
+    // ($x 0 $z1) // 1
+    // ($x $height $z1) // 2
+    // (0 $height $z1) // 3
+
+    // (0 0 $z2) // 4
+    // ($x 0 $z2) // 5
+    // ($x $height $z2) // 6
+    // (0 $height $z2) // 7
+
+    // wedge
+    (0 0 0) // 0
+    ($x 0 $z1) // 1
+    ($x $height $z1) // 2
+    (0 $height 0) // 3
+
+    (0 0 0) // 4
+    ($x 0 $z2) // 5
+    ($x $height $z2) // 6
+    (0 $height 0) // 7
+
+    // wedge 2
+    (0 $heightin 0) // 0
+    ($x $heightin $z1) // 1
+    ($x 0 $z1) // 2
+    (0 0 0) // 3
+
+    (0 $heightin 0) // 4
+    ($x $heightin $z2) // 5
+    ($x 0 $z2) // 6
+    (0 0 0) // 7
+
+    // wedge 3
+    (0 $height 0) // 0
+    ($x $height $z1) // 1
+    ($x $heightout $z1) // 2
+    (0 $heightout 0) // 3
+
+    (0 $height 0) // 4
+    ($x $height $z2) // 5
+    ($x $heightout $z2) // 6
+    (0 $heightout 0) // 7
+
+    // wedge 4
+    ($x $heightin $z1) // 0
+    ($X $heightin $Z1) // 1
+    ($X 0 $Z1) // 2
+    ($x 0 $z1) // 3
+
+    ($x $heightin $z2) // 4
+    ($X $heightin $Z2) // 5
+    ($X 0 $Z2) // 6
+    ($x 0 $z2) // 7
+
+    // wedge 5
+    ($x $height $z1) // 0
+    ($X $height $Z1) // 1
+    ($X $heightout $Z1) // 2
+    ($x $heightout $z1) // 3
+
+    ($x $height $z2) // 4
+    ($X $height $Z2) // 5
+    ($X $heightout $Z2) // 6
+    ($x $heightout $z2) // 7
+);
+
+blocks
+(
+    hex (0 1 2 3 0 5 6 3) (10 400 1) simpleGrading (0.2 1 1) // collapses vertices from block to form wedge
+    hex (8 9 1 0 8 13 5 0) (10 150 1) simpleGrading (0.2 0.2 1) // collapses vertices from block to form wedge
+    hex (3 2 18 19 3 6 22 19) (10 150 1) simpleGrading (0.2 5 1) // collapses vertices from block to form wedge
+    hex (9 25 26 1 13 29 30 5) (60 150 1) simpleGrading (20 0.2 1) // collapses vertices from block to form wedge
+    hex (2 33 34 18 6 37 38 22) (60 150 1) simpleGrading (20 5 1) // collapses vertices from block to form wedge
+    // hex (0 1 2 3 4 5 6 7) (30 180 5) simpleGrading (15 1 1)
+);
+
+edges
+(
+);
+
+boundary
+(
+    inlet
+    {
+        type patch;
+        faces
+        (
+            // (3 7 6 2)
+            (9 13 8 8)
+            (25 29 9 13)
+        );
+    }
+    outlet
+    {
+        type patch;
+        faces
+        (
+            // (1 5 4 0)
+            (19 19 22 18)
+            (18 22 38 34)
+        );
+    }
+    walls
+    {
+        type wall;
+        faces
+        (
+            (2 6 5 1)
+            (26 30 29 25)
+            (34 38 37 33)
+            (1 5 30 26)
+            (33 37 2 6)
+        );
+    }
+    side1
+    {
+        type wedge; // collapseEdges doesn't work with cyclic BCs, so the mesh is created with type patch & edited later in /constant/polyMesh
+        // type cyclic;
+        // neighbourPatch side2;
+        // type symmetry;
+        faces
+        ( 
+            (0 5 6 3)
+            (8 13 5 0)
+            (3 6 22 19)
+            (13 29 30 5)
+            (6 37 38 22)   
+        );
+    }
+    side2
+    {
+        type wedge;
+        // type cyclic;
+        // neighbourPatch side1;
+        // type symmetry;
+        faces
+        (
+            (0 3 2 1)
+            (8 0 1 9)
+            (3 19 18 2)
+            (9 1 26 25)
+            (2 18 34 33)
+        );
+    }
+);
+
+
+// ************************************************************************* //
