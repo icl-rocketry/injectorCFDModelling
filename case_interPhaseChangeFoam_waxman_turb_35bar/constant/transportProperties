@@ -1,0 +1,67 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2006                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      transportProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+phases (water vapour);
+
+phaseChangeTwoPhaseMixture Kunz;
+
+pSat            4.02e6;   // nitrous sat pressure @ 10 C 2300;
+
+sigma           3.6714e-03; // nitrous surface tension @ 10 C original: 0.07;
+
+water //nitrous properties at 10 C 
+{
+    transportModel  Newtonian;
+    nu              7.8391e-5;//original //
+    rho             8.5217e2;//original //
+}
+
+vapour //nitrous properties at 10 C 
+{
+    transportModel  Newtonian;
+    nu              1.4163e-1;//original: //
+    rho             1.1491e2;//original: //
+    // nu              4.273e-4;
+    // rho             0.02308;
+}
+
+//these are all still for water
+KunzCoeffs 
+{
+    UInf            0.16;
+    tInf            0.0094; // L = 0.1 m
+    Cc              10;
+    Cv              10;
+}
+
+MerkleCoeffs
+{
+    UInf            20.0;
+    tInf            0.005;  // L = 0.1 m
+    Cc              80;
+    Cv              1e-03;
+}
+
+SchnerrSauerCoeffs
+{
+    n               3e+13;
+    dNuc            2e-06;
+    Cc              1;
+    Cv              1;
+}
+
+
+// ************************************************************************* //
