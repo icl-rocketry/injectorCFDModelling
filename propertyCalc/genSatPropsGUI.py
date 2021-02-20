@@ -9,32 +9,30 @@ def visc_sat_liq(T):
     b3 = 5.24
     b4 = 0.0293423
     theta = (Tc-b3)/(T-b3)
-    eta = b4*exp(b1*pow(theta-1,1/3) + b2*pow(theta-1,4/3))
+    eta = b4*exp(b1*pow(theta-1,1/3) + b2*pow(theta-1,4/3))*pow(10, -3)
     return eta
 
-def visc_sat_vap(T):
-    Tc = 273.15 + 36.4
+def visc_sat_vap(T): # takes T in degC
+    Tc = 273.15 + 36.42
     b1 = 3.3281
     b2 = -1.18237
     b3 = -0.055155
     Tr = T/Tc
-    eta = exp(b1 + b2*pow(1/Tr - 1, 1/3) + b3*pow(1/Tr - 1, 4/3))
+    eta = exp(b1 + b2*pow(1/Tr - 1, 1/3) + b3*pow(1/Tr - 1, 4/3))*pow(10, -6)
     return eta
 
-def surface_tension(T):
-    Tc = 273.15 + 36.4
+def surface_tension(T): 
+    Tc = 273.15 + 36.42
     b1 = 69.31
     b2 = 1.19346
     b3 = 0
     Tr = T/Tc
-    sigma = b1*pow((1-Tr),b2)*(1+b3*(1-Tr))
+    sigma = b1*pow((1-Tr),b2)*(1+b3*(1-Tr))*pow(10, -3)
     return sigma
 
 def update_disp(P,rhov,rhol,Vv,Vl,sigma,dHl,dHv):
     window["PRESSURE"].update(value="{:.4e}".format(P))
     window["TEMPERATURE"].update(value="{:.2f}".format(T))
-    window["LENTHALPY"].update(value="{:.4e}".format(dHl))
-    window["VENTHALPY"].update(value="{:.4e}".format(dHv))
     window["SIGMA"].update(value="{:.4e}".format(sigma))
     window["vapDensity"].update(value="{:.4e}".format(rhov))
     window["liqDensity"].update(value="{:.4e}".format(rhol))
@@ -49,12 +47,12 @@ def calc_props(T,fluid):
     dHv = PropsSI("H","T",T,"Q",1,fluid)
     dHl = PropsSI("H","T",T,"Q",0,fluid)
     if fluid == 'NitrousOxide':
-        Vv = visc_sat_vap(T)
-        Vl = visc_sat_liq(T)
+        Vv = visc_sat_vap(T)/rhov
+        Vl = visc_sat_liq(T)/rhol
         sigma = surface_tension(T)
     else:
-        Vv = PropsSI('V','T',T,'Q',1,fluid)
-        Vl = PropsSI('V','T',T,'Q',0,fluid)
+        Vv = PropsSI('V','T',T,'Q',1,fluid)/rhov
+        Vl = PropsSI('V','T',T,'Q',0,fluid)/rhol
         sigma = PropsSI("surface_tension","T",T,"Q",0,fluid)
     update_disp(Pv,rhov,rhol,Vv,Vl,sigma,dHv,dHl)
     return
@@ -83,12 +81,12 @@ layout = [
             [sg.Button('Calculate')],
             [sg.Text("Temp: ",size=(12,1)),sg.Input("",key="TEMPERATURE", size=(10,1)),sg.Text("K")],
             [sg.Text("Pressure: ",size=(12,1)),sg.Input("",key="PRESSURE",size=(10,1)),sg.Text("Pa")],
-            [sg.Text("Surface Tension: ",size=(12,1)),sg.Input("",key="SIGMA",size=(10,1)),sg.Text("N/m²")],
-            [sg.Text("State",size=(7,1)),sg.Text("Density (kg/m³)",size=(12,1)),sg.Text("Kinematic Viscosity (m²/s)",size=(20,1)),sg.Text("Enthalpy (J/kg)")],
+            [sg.Text("Surface Tension: ",size=(12,1)),sg.Input("",key="SIGMA",size=(10,1)),sg.Text("N/m")],
+            [sg.Text("State",size=(7,1)),sg.Text("Density (kg/m³)",size=(12,1)),sg.Text("Kinematic Viscosity (m²/s)",size=(20,1))],
             [sg.Text("vapour",size=(7,1)),sg.Input("",key="vapDensity",size=(10,1)),sg.Text("",size=(2,1)),sg.Input("",key="vapVisc",size=(10,1))
-            ,sg.Text("",size=(9,1)),sg.Input("",key="VENTHALPY",size=(10,1))],
+            ,sg.Text("",size=(9,1))],
             [sg.Text("liquid",size=(7,1)),sg.Input("",key="liqDensity",size=(10,1)),sg.Text("",size=(2,1)),sg.Input("",key="liqVisc",size=(10,1))
-            ,sg.Text("",size=(9,1)),sg.Input("",key="LENTHALPY",size=(10,1))]
+            ,sg.Text("",size=(9,1))]
          ]
 
 window = sg.Window('saturation properties calculator', layout, grab_anywhere=True)
