@@ -7,6 +7,8 @@ Instructions for each case are in the foam.foam file of that folder
 Literature:  
 https://drive.google.com/drive/u/0/folders/1pLNUjTEDKc12vxf4TFTfJRrxMRk-E3q4  
 
+Github did not process Eulerian case, it is also on drive
+
 <h1>notes</h1>
 <h2>mesh</h2>
 <p>
